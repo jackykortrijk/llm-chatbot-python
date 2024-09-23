@@ -1,8 +1,15 @@
 import streamlit as st
 from utils import write_message
 
+
 # Page Config
-st.set_page_config("UGentISyE", page_icon="random")
+st.set_page_config("UGent ISyE Chatbot", page_icon="random")
+
+# Show title and description.
+st.title("🤖 UGent ISyE Chatbot")
+st.write(
+    "This is a chatbot that uses OpenAI's GPT-4.0 model to generate responses. "
+)
 
 # Set up Session State
 if "messages" not in st.session_state:
