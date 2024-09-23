@@ -1,6 +1,11 @@
 import streamlit as st
 from utils import write_message
 
+# Create the LLM
+from langchain_openai import ChatOpenAI
+# Create the Embedding model
+from langchain_openai import OpenAIEmbeddings
+
 
 # Page Config
 st.set_page_config("UGent ISyE Chatbot", page_icon="random")
@@ -17,16 +22,14 @@ st.write(
 openai_api_key = st.text_input("OpenAI API Key", type="password")
 if not openai_api_key:
     st.info("Please add your OpenAI API key to continue.", icon="🔑")
-
-    # Create an OpenAI client.
-
-# Set up Session State
-if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {"role": "assistant", "content": "Hello👋, I'm the UGent ISyE Chatbot🤖! What can I do for you?"},
-    ]
-
-# Submit handler
+else:
+    model="gpt-4o-mini"
+    llm = ChatOpenAI(openai_api_key, model)
+    embeddings = OpenAIEmbeddings(openai_api_key)
+    # Set up Session State
+    if "messages" not in st.session_state:
+        st.session_state.messages = [{"role": "assistant", "content": "Hello👋, I'm the UGent ISyE Chatbot🤖! What can I do for you?"},]
+    # Submit handler
 def handle_submit(message):
     """
     Submit handler:
